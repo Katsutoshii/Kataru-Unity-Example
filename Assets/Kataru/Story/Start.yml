@@ -9,6 +9,7 @@ characters:
     description: Side kick.
 cmds:
   clearScreen:
+  save:
 ---
 # Each passage is a key in the YAML file.
 Start:
@@ -27,6 +28,8 @@ Start:
   - >-
     Hello ${name},
     are you ready for an epic story?
+
+  - [save: {}]
 
   # Character dialogue can be done using single-entry maps.
   - Alice: Hello, my name is Alice. This is how you write a dialogue line in Kataru!

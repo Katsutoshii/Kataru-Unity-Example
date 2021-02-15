@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3055b9baa06c6964b968246a1379e651, type: 3}
   m_Name: KataruRunner
   m_EditorClassIdentifier: 
-  bookmarkPath: Kataru/bookmark.yml
-  storyPath: Kataru/story
+  bookmarkPath: Kataru/Bookmark.yml
+  savePath: Bookmark.yml
+  storyPath: Kataru/Story

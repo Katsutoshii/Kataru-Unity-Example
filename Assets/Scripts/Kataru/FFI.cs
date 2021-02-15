@@ -27,6 +27,14 @@ namespace Kataru
         }
 
         [DllImport("kataru_ffi")]
+        static extern FFIStr save_bookmark(byte[] path, UIntPtr length);
+        public static void SaveBookmark(string path)
+        {
+            var bytes = Encoding.UTF8.GetBytes(path);
+            save_bookmark(bytes, (UIntPtr)bytes.Length).ThrowIfError();
+        }
+
+        [DllImport("kataru_ffi")]
         static extern FFIStr load_story(byte[] path, UIntPtr length);
         public static void LoadStory(string path)
         {

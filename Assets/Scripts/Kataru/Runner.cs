@@ -32,8 +32,13 @@ namespace Kataru
     [CreateAssetMenu(fileName = "KataruRunner", menuName = "ScriptableObjects/KataruRunner", order = 1)]
     public class Runner : ScriptableObject
     {
-        [SerializeField] public string bookmarkPath = "Kataru/bookmark.yml";
-        [SerializeField] public string storyPath = "Kataru/story";
+        [SerializeField] public string bookmarkPath = "Kataru/Bookmark.yml";
+        [SerializeField] public string savePath = "Bookmark.bin";
+        [SerializeField] public string storyPath = "Kataru/Story";
+
+        public string BookmarkPath { get => Application.dataPath + "/" + bookmarkPath; }
+        public string SavePath { get => Application.persistentDataPath + "/" + savePath; }
+        public string StoryPath { get => Application.dataPath + "/" + storyPath; }
 
         // Events to listen to.
         public event Action<Dialogue> OnDialogue;
@@ -44,9 +49,21 @@ namespace Kataru
 
         public void Init()
         {
-            Debug.Log("Initializing Kataru, " + Application.dataPath + "/" + bookmarkPath);
-            FFI.LoadStory(Application.dataPath + "/" + storyPath);
-            FFI.LoadBookmark(Application.dataPath + "/" + bookmarkPath);
+            Debug.Log("Initializing Kataru, " + BookmarkPath);
+            FFI.LoadStory(StoryPath);
+            FFI.LoadBookmark(BookmarkPath);
+            FFI.InitRunner();
+        }
+
+        public void Save()
+        {
+            Debug.Log(SavePath);
+            FFI.SaveBookmark(SavePath);
+        }
+
+        public void Load()
+        {
+            FFI.LoadBookmark(SavePath);
             FFI.InitRunner();
         }
 

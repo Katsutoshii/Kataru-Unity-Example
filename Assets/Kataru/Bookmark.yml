@@ -1,6 +1,6 @@
 line: 0
 passage: Start
-namespace: inv
+namespace: ""
 state:
   "":
     test: 0

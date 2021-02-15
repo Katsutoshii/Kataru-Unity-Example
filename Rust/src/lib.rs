@@ -8,12 +8,15 @@ static mut BOOKMARK: Option<Bookmark> = None;
 static mut RUNNER: Option<Runner> = None;
 static mut LINE: Option<&Line> = None;
 
-// Return a pointer to vec of
+// Static data for iterative getters.
 static mut CHOICES: Vec<FFIStr> = Vec::new();
 static mut CMDS: Vec<FFIStr> = Vec::new();
 static mut PARAMS: Vec<FFIStr> = Vec::new();
 static mut VALUES: Vec<FFIStr> = Vec::new();
 
+// For bookmarks.
+/// Loads a bookmark if it exists.
+/// If `default` is `true`, on failure to load it will create a new default bookmark.
 fn try_load_bookmark(path: &str) -> Result<(), ParseError> {
     unsafe {
         BOOKMARK = Some(Bookmark::load(path)?);
@@ -25,10 +28,24 @@ pub extern "C" fn load_bookmark(path: *const c_char, length: usize) -> FFIStr {
     let path = FFIStr::to_str(path, length);
     FFIStr::result(try_load_bookmark(path))
 }
+fn try_save_bookmark(path: &str) -> Result<(), ParseError> {
+    unsafe {
+        match &BOOKMARK {
+            Some(bookmark) => bookmark.save(path),
+            None => Err(perror!("Bookmark was None.")),
+        }
+    }
+}
+#[no_mangle]
+pub extern "C" fn save_bookmark(path: *const c_char, length: usize) -> FFIStr {
+    let path = FFIStr::to_str(path, length);
+    FFIStr::result(try_save_bookmark(path))
+}
 
+// For stories.
 fn try_load_story(path: &str) -> Result<(), ParseError> {
     unsafe {
-        STORY = Some(Story::load(path)?);
+        STORY = Some(Story::load_yml(path)?);
         Ok(())
     }
 }
@@ -37,23 +54,36 @@ pub extern "C" fn load_story(path: *const c_char, length: usize) -> FFIStr {
     let path = FFIStr::to_str(path, length);
     FFIStr::result(try_load_story(path))
 }
-
-fn try_init_runner() -> Result<(), ParseError> {
+fn try_save_story(path: &str) -> Result<(), ParseError> {
     unsafe {
-        if let Some(bookmark) = BOOKMARK.as_mut() {
-            if let Some(story) = &STORY.as_ref() {
-                bookmark.init_state(story);
-                RUNNER = Some(Runner::new(bookmark, story));
-                return Ok(());
-            } else {
-                return Err(perror!("Story was None."));
-            }
-        } else {
-            return Err(perror!("Bookmark was None."));
+        match &STORY {
+            Some(story) => story.save(path),
+            None => Err(perror!("Bookmark was None.")),
         }
     }
 }
+#[no_mangle]
+pub extern "C" fn save_story(path: *const c_char, length: usize) -> FFIStr {
+    let path = FFIStr::to_str(path, length);
+    FFIStr::result(try_save_story(path))
+}
 
+// For runner.
+fn try_init_runner() -> Result<(), ParseError> {
+    unsafe {
+        if let Some(bookmark) = BOOKMARK.as_mut() {
+            if let Some(story) = STORY.as_ref() {
+                bookmark.init_state(story);
+                RUNNER = Some(Runner::new(bookmark, story));
+                Ok(())
+            } else {
+                Err(perror!("Story was None."))
+            }
+        } else {
+            Err(perror!("Bookmark was None."))
+        }
+    }
+}
 #[no_mangle]
 pub extern "C" fn init_runner() -> FFIStr {
     FFIStr::result(try_init_runner())
