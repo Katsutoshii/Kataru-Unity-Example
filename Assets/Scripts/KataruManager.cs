@@ -38,8 +38,19 @@ public class KataruManager : MonoBehaviour
 
     void OnDialogue(Kataru.Dialogue dialogue)
     {
-        Debug.Log(String.Format("Speaker: {0}", dialogue.name));
-        Debug.Log(String.Format("Speech: {0}", dialogue.text));
+        Debug.Log(String.Format("{0}: {1}", dialogue.name, dialogue.text));
+        foreach (var item in dialogue.attributes)
+        {
+            string attribute = item.Key;
+            Kataru.Dialogue.Span[] spans = item.Value;
+
+            string logString = String.Format("Attr {0}:", attribute);
+            foreach (var span in spans)
+            {
+                logString += span.ToString() + ", ";
+            }
+            Debug.Log(logString);
+        }
     }
 
     void OnCommand(Kataru.Command command)

@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Samples/Yarn Spinner/2.0.0-preview/Start Here/Intro.unity
+    guid: 95e7e993052784aeb9df874d49604bee
   m_configObjects: {}

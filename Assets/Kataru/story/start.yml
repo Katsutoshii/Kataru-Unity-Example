@@ -1,15 +1,23 @@
 ---
 namespace: ""
+
 state:
   name: "Player"
+
 characters:
   Alice:
     description: Main character.
   Bob:
     description: Side kick.
-cmds:
+  Narrator:
+    description: Narrator of the story.
+
+commands:
   clearScreen:
   save:
+
+attributes:
+  wave:
 ---
 # Each passage is a key in the YAML file.
 Start:
@@ -27,7 +35,7 @@ Start:
   # If you want to ignore whitespace, use `>-`.
   - >-
     Hello ${name},
-    are you ready for an epic story?
+    are you ready for an <wave>epic</wave> story?
 
   - [save: {}]
 

@@ -1,33 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
-using System.Text;
 
 namespace Kataru
 {
-    public struct Dialogue
-    {
-        public string name;
-        public string text;
-    }
-
-    public struct Command
-    {
-        public string name;
-        public IDictionary<string, object> parameters;
-    }
-
-    public struct Choices
-    {
-        public IList<string> choices;
-        public double timeout;
-    }
-
-    public struct InputCommand
-    {
-        public string prompt;
-    }
 
     [CreateAssetMenu(fileName = "KataruRunner", menuName = "ScriptableObjects/KataruRunner", order = 1)]
     public class Runner : ScriptableObject
@@ -51,6 +26,7 @@ namespace Kataru
         {
             Debug.Log("Initializing Kataru, " + BookmarkPath);
             FFI.LoadStory(StoryPath);
+            FFI.Validate();
             FFI.LoadBookmark(BookmarkPath);
             FFI.InitRunner();
         }
@@ -70,9 +46,8 @@ namespace Kataru
         public void Next(string input)
         {
             Debug.Log("Calling next with input '" + input + "'");
-            LineTag tag = FFI.Next(input);
-            Debug.Log(String.Format("Tag: {0}", tag));
-            switch (tag)
+            FFI.Next(input);
+            switch (FFI.Tag())
             {
                 case LineTag.Choices:
                     OnChoices.Invoke(FFI.LoadChoices());
