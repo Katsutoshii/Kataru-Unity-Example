@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System;
 
 namespace Kataru
 {
-
     [CreateAssetMenu(fileName = "KataruRunner", menuName = "ScriptableObjects/KataruRunner", order = 1)]
     public class Runner : ScriptableObject
     {
@@ -16,11 +16,12 @@ namespace Kataru
         public string StoryPath { get => Application.dataPath + "/" + storyPath; }
 
         // Events to listen to.
-        public event Action<Dialogue> OnDialogue;
-        public event Action<Command> OnCommand;
         public event Action<Choices> OnChoices;
         public event Action OnInvalidChoice;
         public event Action<InputCommand> OnInputCommand;
+
+        public EventMap<Command> Commands = new EventMap<Command>();
+        public EventMap<Dialogue> Characters = new EventMap<Dialogue>();
 
         public void Init()
         {
@@ -64,13 +65,14 @@ namespace Kataru
                     break;
 
                 case LineTag.Dialogue:
-                    OnDialogue.Invoke(FFI.LoadDialogue());
+                    Dialogue dialogue = FFI.LoadDialogue();
+                    Characters.Invoke(dialogue.name, dialogue);
                     break;
 
                 case LineTag.Commands:
                     foreach (Command command in FFI.LoadCommands())
                     {
-                        OnCommand.Invoke(command);
+                        Commands.Invoke(command.name, command);
                     }
                     break;
 

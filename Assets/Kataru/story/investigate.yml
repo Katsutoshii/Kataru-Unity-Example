@@ -7,7 +7,7 @@ state:
 
 ---
 Start:
-  - [clearScreen: {}]
+  - [ClearScreen: {}]
   - Narrator: This is another passage in the same namespace, defined in a different file!
   - Here let's show how we can use state to have nodes that are explorable at most once.
   - goto: Investigate

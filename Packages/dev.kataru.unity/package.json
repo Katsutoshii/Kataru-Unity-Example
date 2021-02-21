@@ -1,0 +1,17 @@
+{
+    "name": "dev.kataru.unity",
+    "version": "0.0.1",
+    "displayName": "Kataru",
+    "description": "Kataru is a YAML based dialogue engine implemented in Rust. This package brings Kataru to Unity via native plugins for Windows and MacOS (WebGL not supported).",
+    "unity": "2020.2",
+    "keywords": [
+        "Dialogue",
+        "Kataru"
+    ],
+    "author": {
+        "name": "Josiah Putman",
+        "url": "https://github.com/Katsutoshii/kataru"
+    },
+    "hideInEditor": false,
+    "samples": []
+}

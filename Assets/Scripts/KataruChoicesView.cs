@@ -3,24 +3,16 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-class KataruChoicesView : MonoBehaviour
+class KataruChoicesView : Kataru.Handler
 {
-    [SerializeField] Kataru.Runner runner;
-
     [SerializeField] RectTransform optionContainer = null;
     [SerializeField] GameObject optionButtonTemplate = null;
 
-    private bool interrupt = false;
-    private List<GameObject> currentOptionButtons = new List<GameObject>();
+    private List<GameObject> optionButtons = new List<GameObject>();
 
-    void Start()
+    protected override void OnChoices(Kataru.Choices choices)
     {
-        runner.OnChoices += OnChoices;
-    }
-
-    public void OnChoices(Kataru.Choices choices)
-    {
-        currentOptionButtons.Clear();
+        optionButtons.Clear();
         foreach (string choice in choices.choices)
         {
 
@@ -36,24 +28,19 @@ class KataruChoicesView : MonoBehaviour
 
             text.color = Color.white;
 
-            currentOptionButtons.Add(newOption);
+            optionButtons.Add(newOption);
         }
     }
 
     public void OnChoice(string choice)
     {
         Debug.Log("OptionButtonSelected '" + choice + "'");
-        foreach (var button in currentOptionButtons)
+        foreach (var button in optionButtons)
         {
             Destroy(button);
         }
 
-        currentOptionButtons.Clear();
-        runner.Next(choice);
-    }
-
-    void OnDisable()
-    {
-        runner.OnChoices -= OnChoices;
+        optionButtons.Clear();
+        Runner.Next(choice);
     }
 }

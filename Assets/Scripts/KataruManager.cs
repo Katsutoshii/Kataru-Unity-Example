@@ -1,38 +1,33 @@
 
 using UnityEngine;
+using UnityEngine.Events;
 using System;
+using System.Collections.Generic;
 
-public class KataruManager : MonoBehaviour
+public class KataruManager : Kataru.Handler
 {
-    [SerializeField] Kataru.Runner runner;
-
-    void Start()
+    void Awake()
     {
-        runner.Init();
-
-        runner.OnChoices -= OnChoices;
-        runner.OnDialogue += OnDialogue;
-        runner.OnCommand += OnCommand;
-        runner.OnInputCommand += OnInputCommand;
-
-        runner.Next("");
-    }
-
-    void OnDisable()
-    {
-        runner.OnChoices -= OnChoices;
-        runner.OnDialogue -= OnDialogue;
-        runner.OnCommand -= OnCommand;
-        runner.OnInputCommand -= OnInputCommand;
-    }
-
-    void Update()
-    {
-        //Detect when the Return key is pressed down
-        if (Input.GetKeyDown(KeyCode.Return))
+        Commands = new Dictionary<string, UnityAction<Kataru.Command>>()
         {
-            Debug.Log("Next!");
-            runner.Next("");
+            ["ClearScreen"] = ClearScreen,
+            ["Reset"] = Reset,
+            ["Save"] = Save
+        };
+
+        Characters = new Dictionary<string, UnityAction<Kataru.Dialogue>>()
+        {
+            { "Narrator", OnDialogue },
+            { "Alice", OnDialogue },
+            { "Bob", OnDialogue }
+        };
+    }
+
+    protected override void OnChoices(Kataru.Choices choices)
+    {
+        foreach (string choice in choices.choices)
+        {
+            Debug.Log(choice);
         }
     }
 
@@ -53,34 +48,46 @@ public class KataruManager : MonoBehaviour
         }
     }
 
-    void OnCommand(Kataru.Command command)
+    void ClearScreen(Kataru.Command command)
     {
-        Debug.Log(String.Format("Command [{0}: {{1}}]",
+        Debug.Log(String.Format("Command [{0}: {1}]",
             command.name,
             String.Join(", ", command.parameters)));
-        if (command.name == "save")
-        {
-            runner.Save();
-        }
-        else if (command.name == "reset")
-        {
-            runner.GotoPassage("End");
-            runner.SetLine(0);
-        }
-
-        runner.Next("");
+        Runner.Next("");
     }
 
-    void OnChoices(Kataru.Choices choices)
+    void Save(Kataru.Command command)
     {
-        foreach (string choice in choices.choices)
-        {
-            Debug.Log(choice);
-        }
+        Debug.Log(String.Format("Command [{0}: {1}]",
+            command.name,
+            String.Join(", ", command.parameters)));
+        Runner.Save();
+        Runner.Next("");
     }
 
-    void OnInputCommand(Kataru.InputCommand inputCommand)
+    void Reset(Kataru.Command command)
     {
-        Debug.Log(inputCommand.prompt);
+        Debug.Log(String.Format("Command [{0}: {1}]",
+            command.name,
+            String.Join(", ", command.parameters)));
+        Runner.GotoPassage("End");
+        Runner.Next("");
+    }
+
+    void Start()
+    {
+        Runner.Init();
+
+        Runner.Next("");
+    }
+
+    void Update()
+    {
+        //Detect when the Return key is pressed down
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log("Next!");
+            Runner.Next("");
+        }
     }
 }

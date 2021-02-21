@@ -13,9 +13,9 @@ characters:
     description: Narrator of the story.
 
 commands:
-  clearScreen:
-  reset:
-  save:
+  ClearScreen:
+  Reset:
+  Save:
 
 attributes:
   wave:
@@ -24,7 +24,7 @@ attributes:
 Start:
   # Commands can be called in the client using `[]`.
   # The `{}` can be used for parameters, i.e. `command: {var1: 0`}.
-  - [clearScreen: {}]
+  - [ClearScreen: {}]
 
   # A single text block can have many lines using `|`.
   - Narrator: |
@@ -33,14 +33,14 @@ Start:
 
   - Kataru is a dialogue engine built completely on top of YAML with a focus on ease of implementation and simplicity of writing.
 
-  - [reset: {}]
+  - [Reset: {}]
 
   # If you want to ignore whitespace, use `>-`.
   - >-
     Hello ${name},
     are you ready for an <wave>epic</wave> story?
 
-  - [save: {}]
+  - [Save: {}]
 
   # Character dialogue can be done using single-entry maps.
   - Alice: Hello, my name is Alice. This is how you write a dialogue line in Kataru!

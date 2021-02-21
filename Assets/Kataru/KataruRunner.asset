@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3055b9baa06c6964b968246a1379e651, type: 3}
   m_Name: KataruRunner
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Kataru:Kataru:Runner
   bookmarkPath: Kataru/Bookmark.yml
-  savePath: Bookmark.yml
+  savePath: Bookmark.bin
   storyPath: Kataru/Story

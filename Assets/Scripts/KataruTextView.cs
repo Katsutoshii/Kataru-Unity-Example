@@ -1,42 +1,49 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-class KataruTextView : MonoBehaviour
+class KataruTextView : Kataru.Handler
 {
-    [SerializeField] Kataru.Runner runner;
     [SerializeField] Text text = null;
+
+
+    void Awake()
+    {
+        Commands = new Dictionary<string, UnityAction<Kataru.Command>>()
+        {
+            { "ClearScreen", ClearScreen },
+        };
+
+        Characters = new Dictionary<string, UnityAction<Kataru.Dialogue>>()
+        {
+            { "Narrator", OnNarrator },
+            { "Alice", OnDialogue },
+            { "Bob", OnDialogue }
+        };
+    }
 
     void OnValidate()
     {
         text = GetComponent<Text>();
     }
 
-    void Start()
+    void OnNarrator(Kataru.Dialogue dialogue)
     {
-        runner.OnDialogue += OnDialogue;
+        text.fontStyle = FontStyle.Italic;
+        text.text = dialogue.text;
     }
 
-    public void OnDialogue(Kataru.Dialogue dialogue)
+    void OnDialogue(Kataru.Dialogue dialogue)
     {
-        if (dialogue.name == "Narrator")
-        {
-            text.text = dialogue.text;
-            text.fontStyle = FontStyle.Italic;
-        }
-        else
-        {
-            text.text = String.Format("{0}: {1}", dialogue.name, dialogue.text);
-            text.fontStyle = FontStyle.Normal;
-        }
+        text.fontStyle = FontStyle.Normal;
+        text.text = String.Format("{0}: {1}", dialogue.name, dialogue.text);
     }
 
-    void OnCommand(Kataru.Command command)
+    void ClearScreen(Kataru.Command command)
     {
-        if (command.name == "clearScreen")
-        {
-            text.text = "";
-        }
+        Debug.Log("Clear text view screen!");
+        text.text = "";
     }
 }
