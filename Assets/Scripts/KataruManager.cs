@@ -1,29 +1,26 @@
 
 using UnityEngine;
-using UnityEngine.Events;
 using System;
-using System.Collections.Generic;
+using Kataru;
 
-public class KataruManager : Kataru.Handler
+public class KataruManager : Handler
 {
-    void Awake()
+    protected override ActionMap<Command> Commands
     {
-        Commands = new Dictionary<string, UnityAction<Kataru.Command>>()
-        {
-            ["ClearScreen"] = ClearScreen,
-            ["Reset"] = Reset,
-            ["Save"] = Save
-        };
+        get => new ActionMap<Command> { ClearScreen, Reset, Save };
+    }
 
-        Characters = new Dictionary<string, UnityAction<Kataru.Dialogue>>()
+    protected override ActionMap<Dialogue> Characters
+    {
+        get => new ActionMap<Dialogue>
         {
-            { "Narrator", OnDialogue },
-            { "Alice", OnDialogue },
-            { "Bob", OnDialogue }
+            ["Narrator"] = OnDialogue,
+            ["Alice"] = OnDialogue,
+            ["Bob"] = OnDialogue
         };
     }
 
-    protected override void OnChoices(Kataru.Choices choices)
+    protected override void OnChoices(Choices choices)
     {
         foreach (string choice in choices.choices)
         {
@@ -31,13 +28,13 @@ public class KataruManager : Kataru.Handler
         }
     }
 
-    void OnDialogue(Kataru.Dialogue dialogue)
+    void OnDialogue(Dialogue dialogue)
     {
         Debug.Log(String.Format("{0}: {1}", dialogue.name, dialogue.text));
         foreach (var item in dialogue.attributes)
         {
             string attribute = item.Key;
-            Kataru.Dialogue.Span[] spans = item.Value;
+            Dialogue.Span[] spans = item.Value;
 
             string logString = String.Format("Attr {0}:", attribute);
             foreach (var span in spans)
@@ -48,7 +45,7 @@ public class KataruManager : Kataru.Handler
         }
     }
 
-    void ClearScreen(Kataru.Command command)
+    void ClearScreen(Command command)
     {
         Debug.Log(String.Format("Command [{0}: {1}]",
             command.name,
@@ -56,7 +53,7 @@ public class KataruManager : Kataru.Handler
         Runner.Next("");
     }
 
-    void Save(Kataru.Command command)
+    void Save(Command command)
     {
         Debug.Log(String.Format("Command [{0}: {1}]",
             command.name,
@@ -65,7 +62,7 @@ public class KataruManager : Kataru.Handler
         Runner.Next("");
     }
 
-    void Reset(Kataru.Command command)
+    void Reset(Command command)
     {
         Debug.Log(String.Format("Command [{0}: {1}]",
             command.name,

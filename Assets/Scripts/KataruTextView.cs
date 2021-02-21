@@ -1,26 +1,24 @@
 using UnityEngine;
-using UnityEngine.Events;
 using System;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using Kataru;
 
-class KataruTextView : Kataru.Handler
+class KataruTextView : Handler
 {
     [SerializeField] Text text = null;
 
-
-    void Awake()
+    protected override ActionMap<Command> Commands
     {
-        Commands = new Dictionary<string, UnityAction<Kataru.Command>>()
-        {
-            { "ClearScreen", ClearScreen },
-        };
+        get => new ActionMap<Command> { ClearScreen };
+    }
 
-        Characters = new Dictionary<string, UnityAction<Kataru.Dialogue>>()
+    protected override ActionMap<Dialogue> Characters
+    {
+        get => new ActionMap<Dialogue>()
         {
-            { "Narrator", OnNarrator },
-            { "Alice", OnDialogue },
-            { "Bob", OnDialogue }
+            ["Narrator"] = OnNarrator,
+            ["Alice"] = OnDialogue,
+            ["Bob"] = OnDialogue
         };
     }
 
@@ -29,19 +27,19 @@ class KataruTextView : Kataru.Handler
         text = GetComponent<Text>();
     }
 
-    void OnNarrator(Kataru.Dialogue dialogue)
+    void OnNarrator(Dialogue dialogue)
     {
         text.fontStyle = FontStyle.Italic;
         text.text = dialogue.text;
     }
 
-    void OnDialogue(Kataru.Dialogue dialogue)
+    void OnDialogue(Dialogue dialogue)
     {
         text.fontStyle = FontStyle.Normal;
         text.text = String.Format("{0}: {1}", dialogue.name, dialogue.text);
     }
 
-    void ClearScreen(Kataru.Command command)
+    void ClearScreen(Command command)
     {
         Debug.Log("Clear text view screen!");
         text.text = "";

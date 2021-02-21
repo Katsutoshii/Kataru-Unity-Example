@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using Kataru;
 using UnityEngine.UI;
 
-class KataruChoicesView : Kataru.Handler
+class KataruChoicesView : Handler
 {
     [SerializeField] RectTransform optionContainer = null;
     [SerializeField] GameObject optionButtonTemplate = null;
 
     private List<GameObject> optionButtons = new List<GameObject>();
 
-    protected override void OnChoices(Kataru.Choices choices)
+    protected override void OnChoices(Choices choices)
     {
         optionButtons.Clear();
         foreach (string choice in choices.choices)

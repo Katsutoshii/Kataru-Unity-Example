@@ -6,14 +6,12 @@ using System.Collections.Generic;
 
 namespace Kataru
 {
-    public class EventMap<T>
+    public class EventMap<T> : Dictionary<string, UnityEvent<T>>
     {
-        private Dictionary<string, UnityEvent<T>> events = new Dictionary<string, UnityEvent<T>>();
-
         public void Add(string name, UnityAction<T> listener)
         {
             UnityEvent<T> @event = null;
-            if (events.TryGetValue(name, out @event))
+            if (TryGetValue(name, out @event))
             {
                 @event.AddListener(listener);
             }
@@ -21,7 +19,7 @@ namespace Kataru
             {
                 @event = new UnityEvent<T>();
                 @event.AddListener(listener);
-                events.Add(name, @event);
+                Add(name, @event);
             }
         }
 
@@ -30,7 +28,7 @@ namespace Kataru
         public void Remove(string name, UnityAction<T> listener)
         {
             UnityEvent<T> @event = null;
-            if (events.TryGetValue(name, out @event))
+            if (TryGetValue(name, out @event))
             {
                 @event.RemoveListener(listener);
             }
@@ -41,7 +39,7 @@ namespace Kataru
         public void Invoke(string name, T args)
         {
             UnityEvent<T> @event = null;
-            if (events.TryGetValue(name, out @event))
+            if (TryGetValue(name, out @event))
             {
                 @event.Invoke(args);
             }
@@ -50,5 +48,12 @@ namespace Kataru
                 Debug.LogError(String.Format("Command '{0}' had no listeners.", name));
             }
         }
+    }
+
+    public class ActionMap<T> : Dictionary<string, UnityAction<T>>
+    {
+        public void Add(UnityAction<T> action) => Add(action.Method.Name, action);
+
+        public ActionMap() : base() { }
     }
 }

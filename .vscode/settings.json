@@ -5,6 +5,7 @@
         "**/.git": false,
         "**/.hg": false,
         "**/.svn": false,
-        "**/CVS": false
+        "**/CVS": false,
+        "**/*.meta": true,
     }
 }

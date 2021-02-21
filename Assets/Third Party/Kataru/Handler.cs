@@ -8,12 +8,10 @@ namespace Kataru
 {
     public class Handler : MonoBehaviour
     {
-        [SerializeField] protected Kataru.Runner Runner;
+        [SerializeField] protected Runner Runner;
 
-        protected Dictionary<string, UnityAction<Kataru.Command>> Commands =
-            new Dictionary<string, UnityAction<Kataru.Command>>();
-        protected Dictionary<string, UnityAction<Kataru.Dialogue>> Characters =
-            new Dictionary<string, UnityAction<Kataru.Dialogue>>();
+        protected virtual ActionMap<Command> Commands { get => new ActionMap<Command>(); }
+        protected virtual ActionMap<Dialogue> Characters { get => new ActionMap<Dialogue>(); }
 
         void OnEnable()
         {
