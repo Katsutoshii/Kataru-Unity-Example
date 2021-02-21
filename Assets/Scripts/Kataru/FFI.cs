@@ -55,14 +55,6 @@ namespace Kataru
         public static void SetLine(int line) => set_line((UIntPtr)line).ThrowIfError();
 
         [DllImport("kataru_ffi")]
-        static extern FFIStr set_passage(byte[] passage, UIntPtr length);
-        public static void SetPassage(string passage)
-        {
-            var bytes = Encoding.UTF8.GetBytes(passage);
-            set_passage(bytes, (UIntPtr)bytes.Length).ThrowIfError();
-        }
-
-        [DllImport("kataru_ffi")]
         static extern FFIStr get_passage();
         public static string GetPassage() => get_passage().ToString();
         #endregion
@@ -97,6 +89,14 @@ namespace Kataru
         [DllImport("kataru_ffi")]
         static extern LineTag tag();
         public static LineTag Tag() => tag();
+
+        [DllImport("kataru_ffi")]
+        static extern FFIStr goto_passage(byte[] passage, UIntPtr length);
+        public static void GotoPassage(string passage)
+        {
+            var bytes = Encoding.UTF8.GetBytes(passage);
+            goto_passage(bytes, (UIntPtr)bytes.Length).ThrowIfError();
+        }
         #endregion
 
         #region Choices

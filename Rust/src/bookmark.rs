@@ -72,22 +72,6 @@ pub extern "C" fn set_state_bool(key: *const c_char, length: usize, value: bool)
     FFIStr::result(try_set_state(key, Value::Bool(value)))
 }
 
-fn try_set_passage(passage: &str) -> Result<()> {
-    unsafe {
-        if let Some(bookmark) = BOOKMARK.as_mut() {
-            bookmark.passage = passage.to_string();
-            Ok(())
-        } else {
-            Err(error!("Bookmark was None."))
-        }
-    }
-}
-#[no_mangle]
-pub extern "C" fn set_passage(passage: *const c_char, length: usize) -> FFIStr {
-    let passage = FFIStr::to_str(passage, length);
-    FFIStr::result(try_set_passage(passage))
-}
-
 #[no_mangle]
 pub extern "C" fn get_passage() -> FFIStr {
     unsafe {

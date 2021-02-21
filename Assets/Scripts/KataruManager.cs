@@ -55,15 +55,19 @@ public class KataruManager : MonoBehaviour
 
     void OnCommand(Kataru.Command command)
     {
-        Debug.Log(String.Format("Command: {0}", command.name));
+        Debug.Log(String.Format("Command [{0}: {{1}}]",
+            command.name,
+            String.Join(", ", command.parameters)));
         if (command.name == "save")
         {
             runner.Save();
         }
-        foreach (var parameter in command.parameters)
+        else if (command.name == "reset")
         {
-            Debug.Log(parameter);
+            runner.GotoPassage("End");
+            runner.SetLine(0);
         }
+
         runner.Next("");
     }
 

@@ -14,6 +14,7 @@ characters:
 
 commands:
   clearScreen:
+  reset:
   save:
 
 attributes:
@@ -31,6 +32,8 @@ Start:
       「カタル」へようこそ!
 
   - Kataru is a dialogue engine built completely on top of YAML with a focus on ease of implementation and simplicity of writing.
+
+  - [reset: {}]
 
   # If you want to ignore whitespace, use `>-`.
   - >-

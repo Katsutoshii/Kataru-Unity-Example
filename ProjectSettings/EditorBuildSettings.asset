@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Samples/Yarn Spinner/2.0.0-preview/Start Here/Intro.unity
+    path: Assets/Scenes/Intro.unity
     guid: 95e7e993052784aeb9df874d49604bee
   m_configObjects: {}

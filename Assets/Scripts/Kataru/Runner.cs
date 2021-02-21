@@ -43,6 +43,12 @@ namespace Kataru
             FFI.InitRunner();
         }
 
+        public void SetLine(int line) => FFI.SetLine(line);
+        public void GotoPassage(string passage) => FFI.GotoPassage(passage);
+        public void SetState(string key, string value) => FFI.SetState(key, value);
+        public void SetState(string key, double value) => FFI.SetState(key, value);
+        public void SetState(string key, bool value) => FFI.SetState(key, value);
+
         public void Next(string input)
         {
             Debug.Log("Calling next with input '" + input + "'");

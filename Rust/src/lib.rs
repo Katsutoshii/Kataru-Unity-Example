@@ -7,8 +7,7 @@ pub use dialogue::{
 
 mod bookmark;
 pub use bookmark::{
-    load_bookmark, set_line, set_passage, set_state_bool, set_state_number, set_state_string,
-    BOOKMARK,
+    load_bookmark, set_line, set_state_bool, set_state_number, set_state_string, BOOKMARK,
 };
 
 mod story;

@@ -35,7 +35,6 @@ pub extern "C" fn save_story(path: *const c_char, length: usize) -> FFIStr {
     FFIStr::result(try_save_story(path))
 }
 
-// For runner.
 fn try_init_runner() -> Result<()> {
     unsafe {
         if let Some(bookmark) = BOOKMARK.as_mut() {
@@ -56,7 +55,6 @@ pub extern "C" fn init_runner() -> FFIStr {
     FFIStr::result(try_init_runner())
 }
 
-// For runner.
 fn try_validate() -> Result<()> {
     unsafe {
         if let Some(story) = STORY.as_ref() {
@@ -91,4 +89,20 @@ pub extern "C" fn next(input: *const c_char, length: usize) -> FFIStr {
 #[no_mangle]
 pub extern "C" fn tag() -> LineTag {
     unsafe { LineTag::tag(&LINE) }
+}
+
+fn try_goto_passage(passage: &str) -> Result<()> {
+    unsafe {
+        if let Some(runner) = RUNNER.as_mut() {
+            runner.goto(passage)?;
+            Ok(())
+        } else {
+            Err(error!("Runner was not initialized."))
+        }
+    }
+}
+#[no_mangle]
+pub extern "C" fn goto_passage(passage: *const c_char, length: usize) -> FFIStr {
+    let passage = FFIStr::to_str(passage, length);
+    FFIStr::result(try_goto_passage(passage))
 }
