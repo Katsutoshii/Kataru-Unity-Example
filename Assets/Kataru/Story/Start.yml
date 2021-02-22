@@ -16,6 +16,8 @@ commands:
   ClearScreen:
   Reset:
   Save:
+  Alice.Wave:
+  Bob.Wave:
 
 attributes:
   wave:
@@ -39,6 +41,9 @@ Start:
     are you ready for an <wave>epic</wave> story?
 
   - [Save: {}]
+
+  - [Alice.Wave: { amount: 10 }]
+  - [Bob.Wave: { amount: 20 }]
 
   # Character dialogue can be done using single-entry maps.
   - Alice: Hello, my name is Alice. This is how you write a dialogue line in Kataru!

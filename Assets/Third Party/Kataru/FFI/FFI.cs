@@ -142,8 +142,32 @@ namespace Kataru
         static string GetParam(int i) => get_param((UIntPtr)i).ToString();
 
         [DllImport("kataru_ffi")]
-        static extern int get_value(UIntPtr i);
-        static string GetValue(int i) => get_value((UIntPtr)i).ToString();
+        static extern ParamType get_param_type(UIntPtr i);
+        [DllImport("kataru_ffi")]
+        static extern bool get_param_bool(UIntPtr i);
+        [DllImport("kataru_ffi")]
+        static extern FFIStr get_param_string(UIntPtr i);
+        [DllImport("kataru_ffi")]
+        static extern double get_param_number(UIntPtr i);
+        static object GetParamValue(int i)
+        {
+            UIntPtr u = (UIntPtr)i;
+            ParamType paramType = get_param_type(u);
+            switch (paramType)
+            {
+                case ParamType.Bool:
+                    return get_param_bool(u);
+
+                case ParamType.Number:
+                    return get_param_number(u);
+
+                case ParamType.String:
+                    return get_param_string(u).ToString();
+
+                default:
+                    return null;
+            }
+        }
 
         public static IEnumerable<Command> LoadCommands()
         {
@@ -155,7 +179,7 @@ namespace Kataru
                 int numParameters = GetParams(i);
                 for (int j = 0; j < numParameters; ++j)
                 {
-                    parameters[GetParam(j)] = GetValue(j);
+                    parameters[GetParam(j)] = GetParamValue(j);
                 }
                 yield return new Command() { name = GetCommand(i), parameters = parameters };
             }

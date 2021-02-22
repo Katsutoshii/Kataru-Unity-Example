@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060fa454f327ea342ac3e95cd82d47d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
   Runner: {fileID: 11400000, guid: 10532dbad74b23944a0b581cba4e469b, type: 2}
   text: {fileID: 204235610}
 --- !u!850595691 &396544732
@@ -423,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fccf26203a92394194f7fe85002b8b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
   Runner: {fileID: 11400000, guid: 10532dbad74b23944a0b581cba4e469b, type: 2}
 --- !u!4 &816668295
 Transform:
@@ -583,6 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a3f279e8b92b346a54b47798c0e749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
   Runner: {fileID: 11400000, guid: 10532dbad74b23944a0b581cba4e469b, type: 2}
   optionContainer: {fileID: 859463802}
   optionButtonTemplate: {fileID: 868029867}
@@ -987,6 +990,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737889538}
   m_CullTransparentMesh: 0
+--- !u!1 &1796369599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796369601}
+  - component: {fileID: 1796369600}
+  m_Layer: 0
+  m_Name: Bob
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1796369600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796369599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f62c39a02c0ea8d40a76689c0b26ab29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Bob
+  Runner: {fileID: 11400000, guid: 10532dbad74b23944a0b581cba4e469b, type: 2}
+--- !u!4 &1796369601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796369599}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 631.5, y: 250.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1816918233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1816918235}
+  - component: {fileID: 1816918234}
+  m_Layer: 0
+  m_Name: Alice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1816918234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816918233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f62c39a02c0ea8d40a76689c0b26ab29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Alice
+  Runner: {fileID: 11400000, guid: 10532dbad74b23944a0b581cba4e469b, type: 2}
+--- !u!4 &1816918235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816918233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 631.5, y: 250.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1897056065
 GameObject:
   m_ObjectHideFlags: 0

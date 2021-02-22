@@ -2,4 +2,4 @@ Push-Location Rust
 cargo build --target x86_64-pc-windows-msvc --all-features --release
 Pop-Location
 
-Copy-Item Rust/target/x86_64-pc-windows-msvc/release/kataru_ffi.dll Assets/Plugins/Windows/kataru_ffi.dll
+Copy-Item Rust/target/x86_64-pc-windows-msvc/release/kataru_ffi.dll "Assets/Third Party/Kataru/Plugins/Windows/kataru_ffi.dll"
