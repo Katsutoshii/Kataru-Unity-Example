@@ -3,6 +3,9 @@ using System;
 
 namespace Kataru
 {
+    /// <summary>
+    /// Simple struct for receiving int arrays over FFI.
+    /// </summary>
     struct FFIArray
     {
         public IntPtr vecptr;

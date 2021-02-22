@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Kataru
 {
+    /// <summary>
+    /// Simple struct for receiving strings over FFI.
+    /// </summary>
     struct FFIStr
     {
         public IntPtr strptr;

@@ -1,72 +1,57 @@
-
 using UnityEngine;
 using System;
-using Kataru;
 
-public class KataruManager : Handler
+/// <summary>
+/// Example Kataru Manager class.
+/// This class is in charge of initializing the Runner.
+/// Also includes examples of reacting to Runner's events.
+/// </summary>
+public class KataruManager : Kataru.Handler
 {
-    protected override ActionMap<Command> Commands
+    protected override void OnChoices(Kataru.Choices choices)
     {
-        get => new ActionMap<Command> { ClearScreen, Reset, Save };
+        Debug.Log($"Choices: {{{String.Join(", ", choices.choices)}}}");
     }
 
-    protected override ActionMap<Dialogue> Characters
+    [Kataru.CharacterHandler("Bob")]
+    [Kataru.CharacterHandler("Alice")]
+    [Kataru.CharacterHandler("Narrator")]
+    public void OnDialogue(Kataru.Dialogue dialogue)
     {
-        get => new ActionMap<Dialogue>
-        {
-            ["Narrator"] = OnDialogue,
-            ["Alice"] = OnDialogue,
-            ["Bob"] = OnDialogue
-        };
-    }
-
-    protected override void OnChoices(Choices choices)
-    {
-        foreach (string choice in choices.choices)
-        {
-            Debug.Log(choice);
-        }
-    }
-
-    void OnDialogue(Dialogue dialogue)
-    {
-        Debug.Log(String.Format("{0}: {1}", dialogue.name, dialogue.text));
+        Debug.Log($"{dialogue.name}: {dialogue.text}");
         foreach (var item in dialogue.attributes)
         {
             string attribute = item.Key;
-            Dialogue.Span[] spans = item.Value;
+            Kataru.Dialogue.Span[] spans = item.Value;
 
-            string logString = String.Format("Attr {0}:", attribute);
+            string logString = $"Attr {attribute}: {{";
             foreach (var span in spans)
             {
                 logString += span.ToString() + ", ";
             }
-            Debug.Log(logString);
+            Debug.Log(logString + "}");
         }
     }
 
-    void ClearScreen(Command command)
+    [Kataru.CommandHandler]
+    void ClearScreen(Kataru.Command command)
     {
-        Debug.Log(String.Format("Command [{0}: {1}]",
-            command.name,
-            String.Join(", ", command.parameters)));
+        Debug.Log($"Command [{command.name}: {{{String.Join(", ", command.parameters)}}}]");
         Runner.Next("");
     }
 
-    void Save(Command command)
+    [Kataru.CommandHandler]
+    public void Save(Kataru.Command command)
     {
-        Debug.Log(String.Format("Command [{0}: {1}]",
-            command.name,
-            String.Join(", ", command.parameters)));
+        Debug.Log($"Command [{command.name}: {{{String.Join(", ", command.parameters)}}}]");
         Runner.Save();
         Runner.Next("");
     }
 
-    void Reset(Command command)
+    [Kataru.CommandHandler]
+    public void Reset(Kataru.Command command)
     {
-        Debug.Log(String.Format("Command [{0}: {1}]",
-            command.name,
-            String.Join(", ", command.parameters)));
+        Debug.Log($"Command [{command.name}: {{{String.Join(", ", command.parameters)}}}]");
         Runner.GotoPassage("End");
         Runner.Next("");
     }
@@ -74,7 +59,6 @@ public class KataruManager : Handler
     void Start()
     {
         Runner.Init();
-
         Runner.Next("");
     }
 
@@ -83,7 +67,6 @@ public class KataruManager : Handler
         //Detect when the Return key is pressed down
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Debug.Log("Next!");
             Runner.Next("");
         }
     }

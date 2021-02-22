@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Kataru;
 using UnityEngine.UI;
 
-class KataruChoicesView : Handler
+/// <summary>
+/// Example Choices view.
+/// Displays dialogue choices as buttons and enters selected into into the Runner.
+/// </summary>
+class KataruChoicesView : Kataru.Handler
 {
     [SerializeField] RectTransform optionContainer = null;
     [SerializeField] GameObject optionButtonTemplate = null;
 
     private List<GameObject> optionButtons = new List<GameObject>();
 
-    protected override void OnChoices(Choices choices)
+    protected override void OnChoices(Kataru.Choices choices)
     {
         optionButtons.Clear();
         foreach (string choice in choices.choices)

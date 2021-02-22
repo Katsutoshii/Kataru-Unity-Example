@@ -6,7 +6,10 @@ using System.Collections.Generic;
 
 namespace Kataru
 {
-    public class FFI
+    /// <summary>
+    /// Low level interface with Rust FFI.
+    /// </summary>
+    internal class FFI
     {
         #region Bookmark
         [DllImport("kataru_ffi")]
@@ -197,7 +200,6 @@ namespace Kataru
         {
             var attributes = new Dictionary<string, Dialogue.Span[]>();
             int numAttributes = GetAttributes();
-            Debug.Log(String.Format("Num attributes {0}", numAttributes));
             for (int i = 0; i < numAttributes; ++i)
             {
                 string attribute = GetAttribute(i);

@@ -44,7 +44,7 @@ namespace Kataru
                 return spans;
             }
 
-            public override string ToString() => String.Format("({0}, {1})", start, stop);
+            public override string ToString() => $"({start}, {stop})";
         }
     }
 

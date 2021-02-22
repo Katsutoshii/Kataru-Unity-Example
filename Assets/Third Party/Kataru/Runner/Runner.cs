@@ -4,6 +4,10 @@ using System;
 
 namespace Kataru
 {
+    /// <summary>
+    /// The Kataru Runner serves as the high level interface with the Kataru Rust FFI module.
+    /// This ScriptableObject 
+    /// </summary>
     [CreateAssetMenu(fileName = "KataruRunner", menuName = "ScriptableObjects/KataruRunner", order = 1)]
     public class Runner : ScriptableObject
     {
@@ -23,21 +27,35 @@ namespace Kataru
         public EventMap<Command> Commands = new EventMap<Command>();
         public EventMap<Dialogue> Characters = new EventMap<Dialogue>();
 
+        /// <summary>
+        /// Initialize the story, bookmark and internal runner.
+        /// This method should only be called once.
+        /// </summary>
         public void Init()
         {
-            Debug.Log("Initializing Kataru, " + BookmarkPath);
+#if UNITY_EDITOR
+            Debug.Log($"Kataru.Init('{StoryPath}')");
+#endif
             FFI.LoadStory(StoryPath);
             FFI.Validate();
             FFI.LoadBookmark(BookmarkPath);
             FFI.InitRunner();
         }
 
+        /// <summary>
+        /// Save the bookmark to path.
+        /// </summary>
         public void Save()
         {
-            Debug.Log(SavePath);
+#if UNITY_EDITOR
+            Debug.Log($"Kataru.Save('{SavePath}')");
+#endif
             FFI.SaveBookmark(SavePath);
         }
 
+        /// <summary>
+        /// Load bookmark from path.
+        /// </summary>
         public void Load()
         {
             FFI.LoadBookmark(SavePath);
@@ -50,9 +68,16 @@ namespace Kataru
         public void SetState(string key, double value) => FFI.SetState(key, value);
         public void SetState(string key, bool value) => FFI.SetState(key, value);
 
+        /// <summary>
+        /// Progress the story using the given input.
+        /// This yields line data from internal dialogue runner, whose data is passed via invoking actions.
+        /// </summary>
+        /// <param name="input"></param>
         public void Next(string input)
         {
-            Debug.Log("Calling next with input '" + input + "'");
+#if UNITY_EDITOR
+            Debug.Log($"Kataru.Next('" + input + "')");
+#endif
             FFI.Next(input);
             switch (FFI.Tag())
             {
