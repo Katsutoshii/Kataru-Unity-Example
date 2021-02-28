@@ -1,13 +1,9 @@
-line: 0
-passage: Start
-namespace: ""
+position:
+  line: 0
+  passage: Start
+  namespace: monster
 state:
-  "":
+  global:
     test: 0
-    name: Player
   intro:
     var: 2
-  inv:
-    Fridge.visited: false
-    Computer.visited: false
-    Coffee.visited: false
